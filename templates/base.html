@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href=" {{ url_for('static', filename='styles/styles.css')}}">
+    <title>{% block title %}{% endblock %}</title>
+</head>
+<body>
+    <header>
+        <h1>Evaluacion de Trabajos</h1>
+    </header>
+    <section class="cuerpo">
+        <nav class="menu">
+            <ul>
+                <li><a href="{{ url_for('enviarTrabajo')}}" class="boton">Enviar Trabajo</a></li>
+                <li><a href="" class="boton sin-hover">Consultar Trabajo</a></li>
+                <li><a href="{{ url_for('asignar')}}" class="boton">Asignar Trabajos</a></li>
+                <li><a href="" class="boton sin-hover">Consultar Estados de Trabajos</a></li>
+                <li><a href="" class="boton sin-hover">Bandeja de Entrada</a></li>
+            </ul>
+        </nav>
+        <main class="main-body">
+            {% block content %}{% endblock %}
+        </main>
+    </section>
+</body>
+</html>
