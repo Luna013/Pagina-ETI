@@ -24,3 +24,9 @@ class GestorBD:
         if not nuevoAsignacion.id:
             db.session.add(nuevoAsignacion)
             db.session.commit()
+
+    def consultarEstado(self, codigoID, correo):
+        trabajo = Trabajo.query.filter_by(id = codigoID, autor_email=correo).first()
+        if trabajo:
+            return trabajo.getEstado()
+        return None

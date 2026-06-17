@@ -18,12 +18,29 @@ gestor = GestorBD()
 def inicio():
     return render_template('aviso.html', mensaje="Pagina en construccion", tipo="error-1")
 
+
+@app.route('/consultarTrabajo', methods = ['GET', 'POST'])
+def consultarTrabajo():
+    if request.method == 'POST':
+        campos = ['id', 'correo']
+        if not all([request.form.get(c) for c in campos]):
+            resultado = render_template('aviso.html', mensaje="Porfavor llene todos los campos", tipo="error")
+        else:
+            estado = gestor.consultarEstado(int(request.form.get('id')), request.form.get('correo'))
+            if estado:
+                resultado = render_template('aviso.html', mensaje=f"El estado del trabajo es: {estado}", tipo="exito")
+            else:
+                resultado = render_template('aviso.html', mensaje=f"Trabajo no encontrado revise sus datos", tipo="error")
+    else:
+        resultado = render_template('consultarTrabajo.html')
+    return resultado
+
 @app.route('/enviarTrabajo', methods = ['GET', 'POST'])
 def enviarTrabajo():
     if request.method =='POST':
         campos = ['titulo', 'resumen', 'area', 'nombreAutor', 'apellidoAutor', 'email']
         if not all([request.form.get(c) for c in campos]):
-            resultado = render_template('aviso.html', mensaje="Llene todos los campos...", tipo="error",)
+            resultado = render_template('aviso.html', mensaje="Llene todos los campos...", tipo="error")
         else:
             archivo = request.files.get('archivo')
             if archivo:
